@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const  _ = require('lodash')
+require('dotenv').config()
 const app = express();
 //const date = require(__dirname  + '/date.js');
 //let items = ["buy food", "cook food", "eat food"]
@@ -11,7 +12,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
-mongoose.connect("mongodb+srv://admin-amey:17032003@cluster0.gkgf8po.mongodb.net/todolistDB")
+mongoose.connect(process.env.MONGODB_CONNECT_URI)
 //Creating A schems for the db
 const itemSchema = {
   name: String
@@ -119,6 +120,7 @@ app.post("/delete", function(req, res) {
 
 });
 
-app.listen(3000, function() {
-  console.log("Server is running at port 3000");
+const PORT = process.env.PORT;
+app.listen(PORT, function() {
+  console.log("Server is running at port " + PORT);
 });
